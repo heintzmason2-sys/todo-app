@@ -1,0 +1,60 @@
+*{
+    box-sizing: border-box;
+}
+.done span{
+    text-decoration: line-through;
+}
+body{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: black;
+    color: ghostwhite;
+
+}
+form{
+    display:flex;
+    align-items: center;
+    gap: 10px;
+    border:1px solid gold;
+    margin: 40px;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+li{
+    display: flex;
+    justify-content: flex-start;
+    background-color: #1a1a1a;
+    border-radius: 6px;
+    color: ghostwhite;
+    padding: 20px;
+    border: 1px solid gold;
+    gap: 40px;
+
+}
+li:hover{
+    cursor: pointer;
+    background-color: ghostwhite;
+}
+ul{
+    padding: 0;
+    margin: 40px;
+}
+li button{
+    width: 70px;
+    height: 32px;
+    margin: 4px;
+}
+li::before{
+    content: "-"
+}
+li span:first-child{
+    width:300px;
+}
+li span:nth-child(2){
+    width:150px;
+}
+li span:nth-child(3){
+    width:100px;
+}
