@@ -2,9 +2,22 @@ const form = document.querySelector("form");
 const taskInput = document.getElementById("task")
 const dueDateInput = document.getElementById("due-date");
 const priorityInput = document.getElementById("priority");
+const tasks = [];
 form.addEventListener("submit", function(event){
     event.preventDefault();
     console.log(taskInput.value);
+    
+    const task = {
+        title: taskInput.value,
+        dueDate: dueDateInput.value,
+        priority: priorityInput.checked,
+        completed: false
+    };
+    tasks.push(task);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    console.log(tasks);
+
     const li = document.createElement("li")
     const span = document.createElement("span")
     span.textContent = taskInput.value
@@ -15,7 +28,9 @@ form.addEventListener("submit", function(event){
     li.appendChild(span)
     li.appendChild(dueDate);
     li.appendChild(priority);
+    
     li.addEventListener("click",function(){
+        task.completed = !task.completed;
         li.classList.toggle("done")   
     })
     // Add Delete Button
