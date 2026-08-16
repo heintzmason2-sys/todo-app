@@ -2,37 +2,37 @@ const form = document.querySelector("form");
 const taskInput = document.getElementById("task")
 const dueDateInput = document.getElementById("due-date");
 const priorityInput = document.getElementById("priority");
-const tasks = [];
-form.addEventListener("submit", function(event){
-    event.preventDefault();
-    console.log(taskInput.value);
-    
-    const task = {
-        title: taskInput.value,
-        dueDate: dueDateInput.value,
-        priority: priorityInput.checked,
-        completed: false
-    };
-    tasks.push(task);
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+const savedTasks = localStorage.getItem('tasks');
+const tasks = savedTasks ? JSON.parse(savedTasks) : [];
 
-    console.log(tasks);
+// Render Tasks
+function renderTask(task){
+    const li = document.createElement("li");
+    const span = document.createElement("span");
 
-    const li = document.createElement("li")
-    const span = document.createElement("span")
-    span.textContent = taskInput.value
+    span.textContent = task.title
+
     const dueDate = document.createElement("span");
-    dueDate.textContent = dueDateInput.value;
+    dueDate.textContent = task.dueDate
+
     const priority = document.createElement("span");
-    priority.textContent = priorityInput.checked ? "★" : "";
+    priority.textContent = task.priority ? "★" : "";
+
     li.appendChild(span)
     li.appendChild(dueDate);
     li.appendChild(priority);
-    
+
     li.addEventListener("click",function(){
         task.completed = !task.completed;
-        li.classList.toggle("done")   
-    })
+        li.classList.toggle("done")
+
+        localStorage.setItem("tasks", JSON.stringify(tasks))   
+    });
+
+    if(task.completed) {
+        li.classList.add("done")
+    };
+
     // Add Delete Button
     const removeButton = document.createElement("button")
     removeButton.textContent = "Delete";
@@ -40,8 +40,9 @@ form.addEventListener("submit", function(event){
         event.stopPropagation();
         li.remove();
     });
-    li.appendChild(removeButton)
-//Create edit button
+
+
+    //Create edit button
     const editButton = document.createElement("button")
     editButton.textContent = "Edit";
     editButton.addEventListener("click",function(event){
@@ -57,7 +58,35 @@ form.addEventListener("submit", function(event){
         });
 
     });
-    li.appendChild(editButton)
-    document.querySelector("ul").appendChild(li)
+
+        li.appendChild(removeButton);
+        li.appendChild(editButton);
+
+    document.querySelector("ul").appendChild(li);
+}
+
+
+//Submit Handler
+form.addEventListener("submit", function(event){
+    event.preventDefault();
+    console.log(taskInput.value);
+    
+    const task = {
+        title: taskInput.value,
+        dueDate: dueDateInput.value,
+        priority: priorityInput.checked,
+        completed: false
+    };
+    tasks.push(task);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    console.log(tasks);
+    renderTask(task)
 })
 
+    
+//Render
+
+tasks.forEach(task => {
+    renderTask(task);
+});
