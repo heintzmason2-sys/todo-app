@@ -23,6 +23,11 @@ function renderTask(task){
     li.appendChild(priority);
 
     li.addEventListener("click",function(){
+        if(event.target.tagName === "INPUT"){
+            return;
+        
+        }
+
         task.completed = !task.completed;
         li.classList.toggle("done")
 
@@ -37,8 +42,14 @@ function renderTask(task){
     const removeButton = document.createElement("button")
     removeButton.textContent = "Delete";
     removeButton.addEventListener("click", function(event) {
+        const index = tasks.indexOf(task);
+        tasks.splice(index, 1);
+
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+
         event.stopPropagation();
         li.remove();
+
     });
 
 
@@ -51,8 +62,16 @@ function renderTask(task){
         editInput.value = span.textContent
         li.replaceChild(editInput,span)
         editInput.addEventListener("keydown", function(event) {
+            console.log(event.key);
             if (event.key === "Enter") {
+                event.stopPropagation();
+
                 span.textContent = editInput.value
+                task.title = editInput.value
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+                li.replaceChild(span, editInput)
+            
+            } else if(event.key === "Escape"){
                 li.replaceChild(span, editInput)
             }
         });
