@@ -16,13 +16,13 @@ function renderTask(task){
     dueDate.textContent = task.dueDate
 
     const priority = document.createElement("span");
-    priority.textContent = task.priority ? "★" : "";
+    priority.textContent = task.priority ? "High" : "Normal";
 
     li.appendChild(span)
     li.appendChild(dueDate);
     li.appendChild(priority);
 
-    li.addEventListener("click",function(){
+    li.addEventListener("click",function(event){
         if(event.target.tagName === "INPUT"){
             return;
         
@@ -88,6 +88,11 @@ function renderTask(task){
 //Submit Handler
 form.addEventListener("submit", function(event){
     event.preventDefault();
+
+    if(!taskInput.value.trim()) {
+        return;
+    }
+
     console.log(taskInput.value);
     
     const task = {

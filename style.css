@@ -35,7 +35,7 @@ li{
 }
 li:hover{
     cursor: pointer;
-    background-color: ghostwhite;
+    background-color: #333;
 }
 ul{
     padding: 0;
@@ -50,11 +50,23 @@ li::before{
     content: "-"
 }
 li span:first-child{
-    width:300px;
+    flex: 1;
 }
 li span:nth-child(2){
     width:150px;
 }
 li span:nth-child(3){
     width:100px;
+}
+
+button{
+    border: 1px solid gold;
+    border-radius: 4px;
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+li button:hover{
+    background-color: #333;
+    color: white;
 }
